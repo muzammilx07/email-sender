@@ -1,34 +1,32 @@
-// Express server code
-
 const express = require('express');
-const fetch = require('node-fetch');
 const cors = require('cors');
 const app = express();
 const port = 8080;
+require('dotenv').config();
 
-app.use(cors());
+const allowedOrigins = ["https://email-sender-ivory.vercel.app", "http://localhost:3000"]; // Update this with your frontend URL
 
-app.post('/sendEmail', async (req, res) => {
-    const { email, subject, text } = req.body;
-
-    try {
-        const response = await fetch('https://email-sender-5ky6.onrender.com/v1/sendMail', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                // Add any additional headers if required
-            },
-            body: JSON.stringify({ email, subject, text }),
-        });
-
-        const data = await response.json();
-        res.json(data);
-    } catch (error) {
-        console.error('Error sending email:', error);
-        res.status(500).json({ error: 'Failed to send email' });
+// Enable CORS middleware
+app.use(cors({
+  origin: function (origin, callback) {
+    if (allowedOrigins.includes(origin) || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
     }
-});
+  },
+  methods: ["POST"],
+  credentials: true,
+  optionsSuccessStatus: 204
+}));
 
+// Parse JSON request bodies
+app.use(express.json());
+
+// Define routes
+app.use('/v1/', require('./routes/mailRoutes'));
+
+// Start the server
 app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+  console.log(`App is started at port: ${port}`);
 });
