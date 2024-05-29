@@ -18,7 +18,7 @@ function App() {
     };
 
 
-    const res = await fetch(`${url}/v1/sendMail`, {
+    const res = await fetch("https://email-sender-5ky6.onrender.com/v1/sendMail", {
       method: "POST",
       body: JSON.stringify(data),
       headers: {
