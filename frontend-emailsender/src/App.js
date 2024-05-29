@@ -2,10 +2,7 @@ import './App.css';
 import { useState } from 'react';
 
 function App() {
-  const urls = [
-  "http://localhost:8080",
-  "https://email-sender-5ky6.onrender.com"
-];
+  const url = "https://email-sender-5ky6.onrender.com";
 
 
   const [email, setEmail] = useState("");
