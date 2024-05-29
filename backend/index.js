@@ -4,8 +4,8 @@ const app = express();
 const port = 8080;
 require('dotenv').config();
 
-const allowedOrigins = ["https://email-sender-5ky6.onrender.com
-", "http://localhost:8080"];
+const allowedOrigins = ["https://email-sender-5ky6.onrender.com", "http://localhost:8080"];
+
 
 app.use(cors({
   origin: function (origin, callback) {
